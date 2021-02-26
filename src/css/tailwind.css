@@ -5,4 +5,8 @@
   @apply border-red-900 border-2;
 }
 
+.bg-image {
+  background-image: url("https://picsum.photos/400");
+}
+
 @tailwind utilities;
