@@ -11,20 +11,45 @@
 
   <body class="flex bg-fixed from-black via-gray-900 to-purple-900 bg-gradient-to-br">
     <header class="w-72 h-screen bg-transparent text-white border-r-2 border-gray-700">
-      <div class="sticky top-0">
-        <h1 class="text-center font-bold text-3xl pb-8">My Library</h1>
+      <div class="sticky top-0 h-screen">
+        <h1 class="text-center font-bold text-3xl py-4 border-b w-52 m-auto">My Library</h1>
+
+        <article class="flex flex-col items-center justify-center text-xl py-4 border-b w-52 m-auto">
+          <h3 class="text-2xl text-center w-24">Stats</h3>
+
+          <table class="my-2">
+            <tbody>
+              <tr>
+                <td>Total Books:</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Books Read:</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <td>Pages Read:</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+
+        <footer class="text-center w-full py-6 absolute bottom-0 bg-gray-700 font-bold">
+          <h3>Project by PaperOrb</h3>
+        </footer>
       </div>
     </header>
 
     <main class="w-screen grid grid-cols-12 p-4 gap-8 justify-center">
-      <form class="book-card">
+      <form id="form" class="book-card">
         <!-- title author cover image -->
         <div>
           <!-- title -->
-          <input type="text" placeholder="Add a title" class="card-input text-3xl font-bold" />
+          <input type="text" placeholder="Add a title" class="card-input text-3xl font-bold" required />
           <!-- author -->
           <div class="self-center">
-            <input type="text" placeholder="Add author" class="card-input w-36" />
+            <input type="text" placeholder="Add author" class="card-input w-36" required />
           </div>
           <!-- cover image -->
           <input type="text" placeholder="Add cover image URL" class="card-input normal-case" />
@@ -32,9 +57,10 @@
         <!-- pages read and button -->
         <div class="flex justify-between mx-1 text-center">
           <div class="flex flex-col w-24 p-1 card-input text-sm self-end">
-            <input type="text" placeholder="Pages read" class="text-center font-bold bg-transparent" />
+            <div id="error" class="hidden bg-red-400 border normal-case break-words bg-opacity-60">Reduce pages read</div>
+            <input type="number" placeholder="Pages read" id="pages-read" class="disable-spin-button-moz disable-spin-button-webkite remove-num-gui text-center font-bold bg-transparent" required />
             <div class="border-white border-t w-14 self-center my-1"></div>
-            <input type="text" placeholder="Page total" class="text-center font-bold bg-transparent" />
+            <input type="number" required placeholder="Page total" id="total-pages" class="disable-spin-button-moz disable-spin-button-webkite remove-num-gui text-center font-bold bg-transparent" />
           </div>
 
           <button class="text-center self-end bg-purple-400 text-black hover:bg-purple-400 hover:bg-purple-900 hover:text-purple-200 w-16 p-1 rounded">Done</button>
@@ -42,4 +68,6 @@
       </form>
     </main>
   </body>
+
+  <script src="js/index.js"></script>
 </html>
