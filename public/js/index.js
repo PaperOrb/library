@@ -27,13 +27,13 @@ function addBookToLibrary() {
       errorDiv.classList.add('hidden');
     };
 
-    let strBooksArray = ''
     let booksArray = []
-    
-    booksArray = strBooksArray === undefined ? [] : JSON.parse(strBooksArray);
-    strBooksArray = JSON.stringify(localStorage.books);
+    let strBooksArray = ''
+
+    if (typeof localStorage.books === 'string') {booksArray = JSON.parse(localStorage.books)};
 
     booksArray.push(book);
+    strBooksArray = JSON.stringify(booksArray);
     localStorage.setItem('books', strBooksArray);
   });
 };
