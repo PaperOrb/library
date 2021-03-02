@@ -52,20 +52,22 @@ function displayBooks(libraryArr) {
     let bookCard = document.querySelector("#form").cloneNode(true);
     bookCard.style.backgroundImage = `url(${book.cover})`;
 
-    // populate bookcard fields
+    // populate bookcard fields (bust this out into a separate method)
     bookCard[0].value = book.title
     bookCard[1].value = book.author
     bookCard[2].value = book.cover
     bookCard[3].value = book.pagesRead
     bookCard[4].value = book.totalPages
 
-    // change bookcard from edit mode to display mode
+    // disable book for editing
     bookCard[0].disabled = "disabled";
     bookCard[1].disabled = "disabled";
     bookCard[2].style.display ='none';
     bookCard[3].disabled = "disabled";
     bookCard[4].disabled = "disabled";
-    
+    bookCard[5].style.display = "none"; // hide done button
+    bookCard[6].style.display = "block"; // hide done button
+
 
     // append bookcard to main
     let main = document.querySelector('main');
@@ -75,12 +77,37 @@ function displayBooks(libraryArr) {
   // inserts book object as element
 }
 
-form.addEventListener("submit", function (event) {
-  let book = createBook();
+function toggleEditMode(clickedBook) { // this needs to toggle the values
+  bookCard[0].disabled = "disabled";
+  bookCard[1].disabled = "disabled";
+  bookCard[2].style.display ='none';
+  bookCard[3].disabled = "disabled";
+  bookCard[4].disabled = "disabled";
+  bookCard[5].style.display = "none"; // hide done button
+  bookCard[6].style.display = "block"; // hide done button
+}
 
-  if (invalidPagesRead(book, event)) return;  // restarts eventlisten loop if invalidpagesread
-
-  addBookToLibrary(book, libraryArr);
+document.addEventListener('click', function(e) {
+  if(e.target.classList.contains("done")) {
+    let book = createBook();
+    if (invalidPagesRead(book, e)) return;  // restarts eventlisten loop if invalidpagesread
+    addBookToLibrary(book, libraryArr);
+  } else if(e.target.id === "edit") {
+    alert(`${e.target.id}`)
+    // toggleEditMode(e.target);
+    // set id to editing
+  } else if(e.target.id === "commit-edit") {
+    // pop book from array into a variable
+    // addBookToLibrary()
+  };
 });
 
 displayBooks(libraryArr);
+
+// onClick
+//   if e.hastag === done
+//     run old done eventListener method
+//   elseif e.hastag === edit
+//     formFields.forEach { e.toggleAttribute('disabled') }
+//   elseif e.hastag === editing
+//     updateCorrectBookInLibrary
