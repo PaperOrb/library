@@ -591,10 +591,6 @@ video {
   border-width: 2px;
 }
 
-.bg-image {
-  background-image: url("https://picsum.photos/400");
-}
-
 .card-input {
   --tw-bg-opacity: 1;
   background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
@@ -613,7 +609,6 @@ video {
 }
 
 .book-card {
-  background-image: url("https://picsum.photos/400");
   --tw-bg-opacity: 1;
   background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
   border-radius: 0.5rem;

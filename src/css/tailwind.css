@@ -5,16 +5,12 @@
   @apply border-red-900 border-2;
 }
 
-.bg-image {
-  background-image: url("https://picsum.photos/400");
-}
-
 .card-input {
   @apply bg-opacity-60 w-full bg-black rounded font-bold px-2 mt-2 border-b text-center uppercase text-white;
 }
 
 .book-card {
-  @apply bg-image col-span-3 h-96 justify-between flex flex-col px-2 text-gray-400 rounded-lg m-1 p-2 border-b border-l bg-gray-700;
+  @apply col-span-3 h-96 justify-between flex flex-col px-2 text-gray-400 rounded-lg m-1 p-2 border-b border-l bg-gray-700;
 }
 
 .disable-spin-button-moz {

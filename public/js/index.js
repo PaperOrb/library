@@ -1,5 +1,4 @@
-let booksArray = []
-let strBooksArray = ''
+let libraryArr = returnLibraryFromLS();
 
 function Book(title, author, cover, pagesRead, totalPages) {
   this.title = title;
@@ -33,24 +32,55 @@ function invalidPagesRead(book, event) {
   };
 };
 
+function returnLibraryFromLS() {
+  if (typeof localStorage.books === 'string') {
+    return JSON.parse(localStorage.books);
+  } else {
+    return [];
+  };
+};
+
+function addBookToLibrary(book, libraryArr) {
+  libraryArr.push(book);
+  let libraryStr = JSON.stringify(libraryArr);
+  localStorage.setItem('books', libraryStr);
+};
+
+function displayBooks(libraryArr) {
+  libraryArr.forEach(function(book) {
+    // create bookcard with background image
+    let bookCard = document.querySelector("#form").cloneNode(true);
+    bookCard.style.backgroundImage = `url(${book.cover})`;
+
+    // populate bookcard fields
+    bookCard[0].value = book.title
+    bookCard[1].value = book.author
+    bookCard[2].value = book.cover
+    bookCard[3].value = book.pagesRead
+    bookCard[4].value = book.totalPages
+
+    // change bookcard from edit mode to display mode
+    bookCard[0].disabled = "disabled";
+    bookCard[1].disabled = "disabled";
+    bookCard[2].style.display ='none';
+    bookCard[3].disabled = "disabled";
+    bookCard[4].disabled = "disabled";
+    
+
+    // append bookcard to main
+    let main = document.querySelector('main');
+    main.appendChild(bookCard);
+  });
+
+  // inserts book object as element
+}
+
 form.addEventListener("submit", function (event) {
   let book = createBook();
 
-  if (invalidPagesRead(book, event)) return; // restarts eventlisten loop if invalidpagesread
-  if (typeof localStorage.books === 'string') {booksArray = JSON.parse(localStorage.books)}; // loads books from localstorage
+  if (invalidPagesRead(book, event)) return;  // restarts eventlisten loop if invalidpagesread
 
-  booksArray.push(book);
-  strBooksArray = JSON.stringify(booksArray);
-  localStorage.setItem('books', strBooksArray);
+  addBookToLibrary(book, libraryArr);
 });
 
-
-function setCoverImage() {
-  // downloads image
-  // adds image to book object
-}
-
-function displayBooks() {
-  // iterates books arr
-  // inserts book object as element
-}
+displayBooks(libraryArr);
