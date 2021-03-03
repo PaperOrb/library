@@ -1,4 +1,6 @@
 let libraryArr = returnLibraryFromLS();
+let firstBookCard = document.querySelector("main").firstElementChild
+
 
 function Book(title, author, cover, pagesRead, totalPages) {
   this.title = title;
@@ -9,12 +11,11 @@ function Book(title, author, cover, pagesRead, totalPages) {
 }
 
 function createBook() {
-  let form = document.querySelector("#form");
-  let title = form[0].value;
-  let author = form[1].value;
-  let cover = form[2].value;
-  let pagesRead = document.querySelector("#pages-read").value;
-  let totalPages = document.querySelector("#total-pages").value;
+  let title = firstBookCard[0].value;
+  let author = firstBookCard[1].value;
+  let cover = firstBookCard[2].value;
+  let pagesRead = firstBookCard[3].value;
+  let totalPages = firstBookCard[4].value;
   return new Book(title, author, cover, pagesRead, totalPages);
 }
 
@@ -47,29 +48,25 @@ function addBookToLibrary(book, libraryArr) {
 }
 
 function displayBooks(libraryArr) {
-  libraryArr.forEach(function (book, index) {
-    // create bookcard with background image
-    let bookCard = document.querySelector("#form").cloneNode(true);
+  libraryArr.forEach(function (book) {
+   // populate bookcard
+    let bookCard = document.querySelector("main").children[1].cloneNode(true);
+    bookCard.classList.remove("hidden");
     populateBookCard(book, bookCard);
-    if(index === 0) { unlockBookCard(bookCard); } // keep first card editable every time
-    // ^ why you no worky
+
     // append bookcard to main
     let main = document.querySelector("main");
     main.appendChild(bookCard);
   });
 }
 
-function unlockBookCard(card) {
-  card.elements.forEach(function (field) {
+function toggleCardLock(card) { // change
+  [...card.elements].forEach(function (field) {
     if (field.classList.contains("im-disabled")) {
       field.toggleAttribute("disabled");
-    }
-    if (field.classList.contains("im-hidden")) {
+    } else if (field.classList.contains("toggle-hidden")) {
       field.classList.toggle("hidden");
-    }
-    if (field.classList.contains("edit")) {
-      field.classList.toggle("hidden");
-    }
+    };
   });
 }
 
@@ -83,17 +80,19 @@ function populateBookCard(book, card) {
 }
 
 document.addEventListener("click", function (e) {
-  if (e.target.classList.contains("done")) {
+  if (e.target.id === "done") {
     let book = createBook();
-    if (invalidPagesRead(book, e)) return; // restarts eventlisten loop if invalidpagesread
+    if (invalidPagesRead(book, e)) { return }; // restarts eventlisten loop if invalidpagesread
     addBookToLibrary(book, libraryArr);
   } else if (e.target.id === "edit") {
     alert(`${e.target.id}`);
     // toggleEditMode(e.target);
     // set id to editing
   } else if (e.target.id === "commit-edit") {
+    if (invalidPagesRead(book, e)) return; // restarts eventlisten loop if invalidpagesread
     // pop book from array into a variable
     // addBookToLibrary()
+    // toggleCardLock
   }
 });
 
