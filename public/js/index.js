@@ -1,7 +1,6 @@
 let libraryArr = returnLibraryFromLS();
 let firstBookCard = document.querySelector("main").firstElementChild
 
-
 function Book(title, author, cover, pagesRead, totalPages) {
   this.title = title;
   this.author = author;
@@ -20,12 +19,11 @@ function createBook() {
 }
 
 // returns true or false, and prevents submission + displays error
-function invalidPagesRead(book, event) {
+function invalidPagesRead(book) {
   let errorDiv = document.querySelector("#error");
 
   if (Number(book.pagesRead) > Number(book.totalPages)) {
     errorDiv.classList.remove("hidden");
-    event.preventDefault();
     return true;
   } else {
     errorDiv.classList.add("hidden");
@@ -60,7 +58,7 @@ function displayBooks(libraryArr) {
   });
 }
 
-function toggleCardLock(card) { // change
+function toggleCardLock(card) {
   [...card.elements].forEach(function (field) {
     if (field.classList.contains("im-disabled")) {
       field.toggleAttribute("disabled");
@@ -79,16 +77,19 @@ function populateBookCard(book, card) {
   card.style.backgroundImage = `url(${book.cover})`;
 }
 
-document.addEventListener("click", function (e) {
-  if (e.target.id === "done") {
+document.addEventListener("submit", function (e) {
+  if (e.submitter.id === "done") {
+    e.preventDefault();
     let book = createBook();
-    if (invalidPagesRead(book, e)) { return }; // restarts eventlisten loop if invalidpagesread
+    if (invalidPagesRead(book, e)) return; // restarts eventlisten loop if invalidpagesread
     addBookToLibrary(book, libraryArr);
-  } else if (e.target.id === "edit") {
+    e.target.reset();
+    displayBooks([book]);
+  } else if (e.submitter.id === "edit") {
+    e.preventDefault();
+    // enabled editing mode
+  } else if (e.submitter.id === "commit-edit") {
     alert(`${e.target.id}`);
-    // toggleEditMode(e.target);
-    // set id to editing
-  } else if (e.target.id === "commit-edit") {
     if (invalidPagesRead(book, e)) return; // restarts eventlisten loop if invalidpagesread
     // pop book from array into a variable
     // addBookToLibrary()

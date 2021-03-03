@@ -596,7 +596,6 @@ video {
   background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
   --tw-bg-opacity: 0.6;
   border-radius: 0.25rem;
-  border-bottom-width: 1px;
   font-weight: 700;
   margin-top: 0.5rem;
   padding-left: 0.5rem;
@@ -604,27 +603,26 @@ video {
   text-align: center;
   --tw-text-opacity: 1;
   color: rgba(255, 255, 255, var(--tw-text-opacity));
-  text-transform: uppercase;
   width: 100%;
 }
 
 .book-card {
   --tw-bg-opacity: 1;
   background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.5;
+  --tw-border-opacity: 1;
+  border-color: rgba(17, 24, 39, var(--tw-border-opacity));
   border-radius: 0.5rem;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
+  border-width: 4px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 24rem;
   margin: 0.25rem;
   padding: 0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   --tw-text-opacity: 1;
   color: rgba(156, 163, 175, var(--tw-text-opacity));
-  grid-column: span 3 / span 3;
+  grid-column: span 2 / span 2;
 }
 
 .disable-spin-button-moz {
