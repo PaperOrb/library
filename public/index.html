@@ -42,7 +42,7 @@
     </header>
 
     <main class="w-screen grid grid-cols-10 p-4 gap-8 justify-center">
-      <form id="form" class="book-card add-book-form">
+      <form class="book-card add-book-form">
         <!-- title author cover image -->
         <div>
           <!-- title -->
@@ -64,12 +64,12 @@
           </div>
 
           <!-- done & edit buttons -->
-          <button type="submit" id="done" class="done text-center self-end bg-purple-400 text-black hover:bg-purple-900 hover:text-purple-200 w-16 p-1 rounded">Done</ type="submit">
+          <button type="submit" id="done" class="done text-center self-end bg-purple-400 text-black hover:bg-purple-900 hover:text-purple-200 w-16 p-1 rounded">Add Book</button>
           <button type="submit" id="edit" class="edit hidden text-center self-end bg-green-400 text-black hover:bg-green-900 hover:text-purple-200 w-16 p-1 rounded">Edit</button>
         </div>
       </form>
 
-      <form id="form" class="hidden book-card clone-me">
+      <form id="form" data-index="" class="hidden book-card clone-me">
         <!-- title author cover image -->
         <div>
           <!-- title -->
@@ -91,8 +91,8 @@
           </div>
 
           <!-- done & edit buttons -->
-          <button id="done" class="done hidden text-center self-end bg-purple-400 text-black hover:bg-purple-900 hover:text-purple-200 w-16 p-1 rounded">Done</button>
-          <button id="edit" class="edit text-center self-end bg-green-400 text-black hover:bg-green-900 hover:text-purple-200 w-16 p-1 rounded">Edit</button>
+          <button id="commit-edit" class="toggle-hidden done hidden text-center self-end bg-purple-400 text-black hover:bg-purple-900 hover:text-purple-200 w-16 p-1 rounded">Save Change</button>
+          <button id="edit" class="toggle-hidden edit text-center self-end bg-green-400 text-black hover:bg-green-900 hover:text-purple-200 w-16 p-1 rounded">Edit</button>
         </div>
       </form>
     </main>

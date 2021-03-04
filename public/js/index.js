@@ -1,26 +1,29 @@
 let libraryArr = returnLibraryFromLS();
-let firstBookCard = document.querySelector("main").firstElementChild
+let book = '';
+let libraryIndex = 0;
 
-function Book(title, author, cover, pagesRead, totalPages) {
+function Book(title, author, cover, pagesRead, totalPages, index) {
   this.title = title;
   this.author = author;
   this.cover = cover;
   this.pagesRead = pagesRead;
   this.totalPages = totalPages;
+  this.index = index;
 }
 
-function createBook() {
-  let title = firstBookCard[0].value;
-  let author = firstBookCard[1].value;
-  let cover = firstBookCard[2].value;
-  let pagesRead = firstBookCard[3].value;
-  let totalPages = firstBookCard[4].value;
-  return new Book(title, author, cover, pagesRead, totalPages);
+function createBook(card) {
+  let title = card[0].value;
+  let author = card[1].value;
+  let cover = card[2].value;
+  let pagesRead = card[3].value;
+  let totalPages = card[4].value;
+  let index = libraryIndex++;
+  return new Book(title, author, cover, pagesRead, totalPages, index);
 }
 
 // returns true or false, and prevents submission + displays error
-function invalidPagesRead(book) {
-  let errorDiv = document.querySelector("#error");
+function invalidPagesRead(book, form) {
+  let errorDiv = form.querySelector("#error");
 
   if (Number(book.pagesRead) > Number(book.totalPages)) {
     errorDiv.classList.remove("hidden");
@@ -39,8 +42,11 @@ function returnLibraryFromLS() {
   }
 }
 
-function addBookToLibrary(book, libraryArr) {
-  libraryArr.push(book);
+function updateLibraryLS(libraryArr, book = null) {
+  if (book !== null) {
+    libraryArr.push(book);
+  };
+
   let libraryStr = JSON.stringify(libraryArr);
   localStorage.setItem("books", libraryStr);
 }
@@ -49,6 +55,7 @@ function displayBooks(libraryArr) {
   libraryArr.forEach(function (book) {
    // populate bookcard
     let bookCard = document.querySelector("main").children[1].cloneNode(true);
+    bookCard.id = book.index
     bookCard.classList.remove("hidden");
     populateBookCard(book, bookCard);
 
@@ -62,7 +69,8 @@ function toggleCardLock(card) {
   [...card.elements].forEach(function (field) {
     if (field.classList.contains("im-disabled")) {
       field.toggleAttribute("disabled");
-    } else if (field.classList.contains("toggle-hidden")) {
+    } 
+    if (field.classList.contains("toggle-hidden")) {
       field.classList.toggle("hidden");
     };
   });
@@ -80,20 +88,30 @@ function populateBookCard(book, card) {
 document.addEventListener("submit", function (e) {
   if (e.submitter.id === "done") {
     e.preventDefault();
-    let book = createBook();
-    if (invalidPagesRead(book, e)) return; // restarts eventlisten loop if invalidpagesread
-    addBookToLibrary(book, libraryArr);
+    book = createBook(e.target);
+    if (invalidPagesRead(book, e.target)) return; // restarts eventlisten loop if invalidpagesread
+    updateLibraryLS(libraryArr, book);
     e.target.reset();
     displayBooks([book]);
   } else if (e.submitter.id === "edit") {
     e.preventDefault();
-    // enabled editing mode
+    toggleCardLock(e.target)
   } else if (e.submitter.id === "commit-edit") {
-    alert(`${e.target.id}`);
-    if (invalidPagesRead(book, e)) return; // restarts eventlisten loop if invalidpagesread
-    // pop book from array into a variable
-    // addBookToLibrary()
-    // toggleCardLock
+    e.preventDefault();
+
+    for(let i = libraryArr.length - 1; i > -1; i--) {
+      if(libraryArr[i].index === Number(e.target.id)) { 
+        libraryArr.splice(libraryArr[i].index, 1)
+      };
+    };
+
+    let updatedBook = createBook(e.target);
+
+    if (invalidPagesRead(updatedBook, e.target)) {
+      libraryArr = returnLibraryFromLS(); // undoes changes if invalidpages
+      return;
+    }
+    toggleCardLock(e.target)
   }
 });
 
