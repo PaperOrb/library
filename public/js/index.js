@@ -1,6 +1,7 @@
 let libraryArr = returnLibraryFromLS();
 let book = '';
 let libraryIndex = 0;
+let main = document.querySelector("main");
 
 function Book(title, author, cover, pagesRead, totalPages, index) {
   this.title = title;
@@ -51,6 +52,7 @@ function updateLibraryLS(libraryArr, book = null) {
   localStorage.setItem("books", libraryStr);
 }
 
+// can append a single book (e.g when clicking done) or whole array (e.g when DOM is cleared on refresh)
 function displayBooks(libraryArr) {
   libraryArr.forEach(function (book) {
    // populate bookcard
@@ -60,7 +62,6 @@ function displayBooks(libraryArr) {
     populateBookCard(book, bookCard);
 
     // append bookcard to main
-    let main = document.querySelector("main");
     main.appendChild(bookCard);
   });
 }
@@ -112,6 +113,9 @@ document.addEventListener("submit", function (e) {
       return;
     }
     toggleCardLock(e.target)
+    updateLibraryLS(libraryArr, updatedBook);
+    main.removeChild(e.target)
+    displayBooks([updatedBook]);
   }
 });
 
