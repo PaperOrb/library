@@ -1,6 +1,5 @@
 let libraryArr = returnLibraryFromLS();
 let book = '';
-let libraryIndex = 0;
 let main = document.querySelector("main");
 
 function Book(title, author, cover, pagesRead, totalPages, index) {
@@ -18,8 +17,7 @@ function createBook(card) {
   let cover = card[2].value;
   let pagesRead = card[3].value;
   let totalPages = card[4].value;
-  let index = libraryIndex++;
-  return new Book(title, author, cover, pagesRead, totalPages, index);
+  return new Book(title, author, cover, pagesRead, totalPages, newHighestIndex());
 }
 
 // returns true or false, and prevents submission + displays error
@@ -33,7 +31,20 @@ function invalidPagesRead(book, form) {
     errorDiv.classList.add("hidden");
     return false;
   }
-}
+};
+
+function newHighestIndex() {
+  if (typeof localStorage.index === "string") {
+    highestIndex = Number(JSON.parse(localStorage.index));
+    strHighestIndex = JSON.stringify(++highestIndex);
+    localStorage.setItem("index", strHighestIndex);
+  } else {
+    localStorage.setItem("index", "0");
+    return Number(localStorage.index)
+  };
+
+  return Number(highestIndex);
+};
 
 function returnLibraryFromLS() {
   if (typeof localStorage.books === "string") {
@@ -41,7 +52,7 @@ function returnLibraryFromLS() {
   } else {
     return [];
   }
-}
+};
 
 function updateLibraryLS(libraryArr, book = null) {
   if (book !== null) {
@@ -101,8 +112,9 @@ document.addEventListener("submit", function (e) {
     e.preventDefault();
 
     for(let i = libraryArr.length - 1; i > -1; i--) {
-      if(libraryArr[i].index === Number(e.target.id)) { 
-        libraryArr.splice(libraryArr[i].index, 1)
+      if(Number(libraryArr[i].index) === Number(e.target.id)) {
+        libraryArr.splice(i, 1)
+        updateLibraryLS(libraryArr)
       };
     };
 
@@ -112,6 +124,7 @@ document.addEventListener("submit", function (e) {
       libraryArr = returnLibraryFromLS(); // undoes changes if invalidpages
       return;
     }
+
     toggleCardLock(e.target)
     updateLibraryLS(libraryArr, updatedBook);
     main.removeChild(e.target)
