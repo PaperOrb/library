@@ -111,19 +111,22 @@ document.addEventListener("submit", function (e) {
   } else if (e.submitter.id === "commit-edit") {
     e.preventDefault();
 
-    for(let i = libraryArr.length - 1; i > -1; i--) {
-      if(Number(libraryArr[i].index) === Number(e.target.id)) {
-        libraryArr.splice(i, 1)
-        updateLibraryLS(libraryArr)
-      };
-    };
-
     let updatedBook = createBook(e.target);
 
     if (invalidPagesRead(updatedBook, e.target)) {
-      libraryArr = returnLibraryFromLS(); // undoes changes if invalidpages
+      // libraryArr = returnLibraryFromLS(); // undoes changes if invalidpages
       return;
     }
+
+    // find book inside libraryArr correspdoning to clicked form
+    for(let i = libraryArr.length - 1; i > -1; i--) {
+      if(Number(libraryArr[i].index) === Number(e.target.id)) {
+        libraryArr.splice(i, 1)
+        // updateLibraryLS(libraryArr)
+      };
+    };
+
+
 
     toggleCardLock(e.target)
     updateLibraryLS(libraryArr, updatedBook);

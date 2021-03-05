@@ -610,6 +610,7 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
   --tw-bg-opacity: 0.5;
+  background-size: cover;
   --tw-border-opacity: 1;
   border-color: rgba(17, 24, 39, var(--tw-border-opacity));
   border-radius: 0.5rem;
