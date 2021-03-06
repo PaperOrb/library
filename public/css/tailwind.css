@@ -620,10 +620,18 @@ video {
   justify-content: space-between;
   height: 24rem;
   margin: 0.25rem;
+  -o-object-fit: cover;
+     object-fit: cover;
   padding: 0.5rem;
   --tw-text-opacity: 1;
   color: rgba(156, 163, 175, var(--tw-text-opacity));
-  grid-column: span 2 / span 2;
+  grid-column: span 1 / span 1;
+}
+
+@media (min-width: 1024px) {
+  .book-card {
+    grid-column: span 2 / span 2;
+  }
 }
 
 .disable-spin-button-moz {

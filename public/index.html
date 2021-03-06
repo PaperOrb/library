@@ -9,13 +9,15 @@
     <title>My Library</title>
   </head>
 
-  <body class="flex bg-fixed from-black via-gray-900 to-purple-900 bg-gradient-to-br">
-    <header class="w-72 h-screen bg-transparent text-white">
-      <div class="w-60 fixed top-0 h-screen border-r-2 border-gray-700">
-        <h1 class="text-center font-bold text-2xl py-4 border-b w-52 m-auto">My Library</h1>
+  <body class="flex flex-col lg:flex-row bg-fixed from-black via-gray-900 to-purple-900 bg-gradient-to-br">
+    <header class="h-24 w-screen lg:h-screen lg:w-72 text-white">
+      <div class="flex flex-row w-screen h-24 top-0 border-gray-700 border-b-2 lg:flex-col lg:fixed bg-transparent lg:w-60 lg:h-screen lg:border-r-2">
+        <div class="text-center font-bold text-2xl py-4 lg:border-b w-52 m-auto">
+          <h1>My Library</h1>
+        </div>
 
-        <article class="flex flex-col items-center justify-center text-xl py-4 border-b w-52 m-auto">
-          <h3 class="text-2xl text-center w-24">Stats</h3>
+        <article class="flex h-full flex-row py-4 items-center text-sm lg:flex-col lg:text-xl lg:border-b w-52 m-auto">
+          <h3 class="h-full lg:h-8 mr-2 text-indigo-500 text-lg lg:text-2xl text-center w-14 lg:w-24">Stats:</h3>
 
           <table class="my-2">
             <tbody>
@@ -24,7 +26,7 @@
                 <td>0</td>
               </tr>
               <tr>
-                <td>Books Read:</td>
+                <td>Books Done:</td>
                 <td>0</td>
               </tr>
               <tr>
@@ -35,13 +37,13 @@
           </table>
         </article>
 
-        <footer class="text-center w-full py-6 absolute bottom-0 bg-gray-700 font-bold">
+        <footer class="hidden lg:flex justify-center w-full py-6 absolute bottom-0 bg-gray-700 font-bold">
           <h3>Project by PaperOrb</h3>
         </footer>
       </div>
     </header>
 
-    <main class="w-screen grid grid-cols-10 p-4 gap-8 justify-center">
+    <main class="w-screen grid p-4 gap-8 justify-center grid-cols-1 md:grid-cols-2 lg:grid-cols-10">
       <form class="book-card add-book-form">
         <!-- title author cover image -->
         <div>

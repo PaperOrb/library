@@ -1,17 +1,13 @@
 @tailwind base;
 @tailwind components;
 
-.wtf {
-  @apply border-red-900 border-2;
-}
-
 .card-input {
   @apply bg-opacity-60 w-full bg-black rounded font-bold px-2 mt-2 text-center text-white;
-}how can you force an image to crop instead of stretch/distort?  {{c1::set object-fit: cover; https://stackoverflow.com/questions/16177707/avoid-stretch-on-image-css}}
+}
 
 
 .book-card {
-  @apply col-span-2 bg-opacity-50 h-96 justify-between flex flex-col text-gray-400 rounded-lg m-1 p-2 border-4 border-gray-900 bg-gray-700 bg-cover;
+  @apply col-span-1 lg:col-span-2 bg-opacity-50 h-96 justify-between flex flex-col text-gray-400 rounded-lg m-1 p-2 border-4 border-gray-900 bg-gray-700 bg-cover object-cover;
 }
 
 .disable-spin-button-moz {
