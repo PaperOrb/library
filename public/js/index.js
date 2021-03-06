@@ -1,6 +1,8 @@
-let doneBooksCount, pagesRead, totalBooks = 0
+let doneBooksCount,
+  pagesRead,
+  totalBooks = 0;
 let libraryArr = returnLibraryFromLS();
-let book = '';
+let book = "";
 let main = document.querySelector("main");
 
 function Book(title, author, cover, pagesRead, totalPages, index) {
@@ -32,7 +34,7 @@ function invalidPagesRead(book, form) {
     errorDiv.classList.add("hidden");
     return false;
   }
-};
+}
 
 function newHighestIndex() {
   if (typeof localStorage.index === "string") {
@@ -41,11 +43,11 @@ function newHighestIndex() {
     localStorage.setItem("index", strHighestIndex);
   } else {
     localStorage.setItem("index", "0");
-    return Number(localStorage.index)
-  };
+    return Number(localStorage.index);
+  }
 
   return Number(highestIndex);
-};
+}
 
 function returnLibraryFromLS() {
   if (typeof localStorage.books === "string") {
@@ -53,12 +55,12 @@ function returnLibraryFromLS() {
   } else {
     return [];
   }
-};
+}
 
 function updateLibraryLS(libraryArr, book = null) {
   if (book !== null) {
     libraryArr.push(book);
-  };
+  }
 
   let libraryStr = JSON.stringify(libraryArr);
   localStorage.setItem("books", libraryStr);
@@ -67,13 +69,10 @@ function updateLibraryLS(libraryArr, book = null) {
 // can append a single book (e.g when clicking done) or whole array (e.g when DOM is cleared on refresh)
 function displayBooks(libraryArr) {
   libraryArr.forEach(function (book) {
-   // populate bookcard
     let bookCard = document.querySelector("main").children[1].cloneNode(true);
-    bookCard.id = book.index
+    bookCard.id = book.index;
     bookCard.classList.remove("hidden");
     populateBookCard(book, bookCard);
-
-    // append bookcard to main
     main.appendChild(bookCard);
   });
 }
@@ -82,10 +81,10 @@ function toggleCardLock(card) {
   [...card.elements].forEach(function (field) {
     if (field.classList.contains("im-disabled")) {
       field.toggleAttribute("disabled");
-    } 
+    }
     if (field.classList.contains("toggle-hidden")) {
       field.classList.toggle("hidden");
-    };
+    }
   });
 }
 
@@ -99,62 +98,60 @@ function populateBookCard(book, card) {
 }
 
 document.addEventListener("submit", function (e) {
-  if (e.submitter.id === "done") {
-    e.preventDefault();
-    book = createBook(e.target);
-    if (invalidPagesRead(book, e.target)) return; // restarts eventlisten loop if invalidpagesread
-    updateLibraryLS(libraryArr, book);
-    e.target.reset();
-    displayBooks([book]);
-    calculateBookStats();
-    displayLsBookStats();
-  } else if (e.submitter.id === "edit") {
-    e.preventDefault();
-    toggleCardLock(e.target);
-  } else if (e.submitter.id === "delete") {
-    toggleConfirmation(e.target);
-  } else if (e.submitter.id === "delete-confirm") {
-    removeBookFromLibArr(e);
-    updateLibraryLS(libraryArr);
-    main.removeChild(e.target);
-    calculateBookStats();
-    displayLsBookStats();
-  } else if (e.submitter.id === "commit-edit") {
-    e.preventDefault();
-    let updatedBook = createBook(e.target);
-
-    if (invalidPagesRead(updatedBook, e.target)) {
-      // libraryArr = returnLibraryFromLS(); // undoes changes if invalidpages
-      return;
-    }
-
-    removeBookFromLibArr(e);
-    toggleCardLock(e.target)
-    updateLibraryLS(libraryArr, updatedBook);
-    main.removeChild(e.target)
-    displayBooks([updatedBook]);
-    calculateBookStats();
-    displayLsBookStats();
+  switch (e.submitter.id) {
+    case "done":
+      e.preventDefault();
+      book = createBook(e.target);
+      if (invalidPagesRead(book, e.target)) return; // restarts eventlisten loop if invalidpagesread
+      updateLibraryLS(libraryArr, book);
+      e.target.reset();
+      displayBooks([book]);
+      calculateBookStats();
+      displayLsBookStats();
+      break;
+    case "edit":
+      e.preventDefault();
+      toggleCardLock(e.target);
+      break;
+    case "delete":
+      removeBookFromLibArr(e);
+      updateLibraryLS(libraryArr);
+      main.removeChild(e.target);
+      calculateBookStats();
+      displayLsBookStats();
+      break;
+    case "commit-edit":
+      e.preventDefault();
+      let updatedBook = createBook(e.target);
+      if (invalidPagesRead(updatedBook, e.target)) return;
+      removeBookFromLibArr(e);
+      toggleCardLock(e.target);
+      updateLibraryLS(libraryArr, updatedBook);
+      main.removeChild(e.target);
+      displayBooks([updatedBook]);
+      calculateBookStats();
+      displayLsBookStats();
+      break;
   }
 });
 
 function removeBookFromLibArr(e) {
-  for(let i = libraryArr.length - 1; i > -1; i--) {
-    if(Number(libraryArr[i].index) === Number(e.target.id)) {
-      libraryArr.splice(i, 1)
-    };
-  };
-};
+  for (let i = libraryArr.length - 1; i > -1; i--) {
+    if (Number(libraryArr[i].index) === Number(e.target.id)) {
+      libraryArr.splice(i, 1);
+    }
+  }
+}
 
 function calculateBookStats() {
-  doneBooksCount = 0
-  pagesRead = 0
-  totalBooks = 0
+  doneBooksCount = 0;
+  pagesRead = 0;
+  totalBooks = 0;
 
-  libraryArr.forEach(function(e) {
-    if(Number(e.pagesRead) === Number(e.totalPages)) {
+  libraryArr.forEach(function (e) {
+    if (Number(e.pagesRead) === Number(e.totalPages)) {
       doneBooksCount++;
-    };
+    }
   });
 
   pagesRead = libraryArr.reduce((sum, book) => sum + Number(book.pagesRead), 0);
