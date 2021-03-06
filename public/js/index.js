@@ -1,3 +1,4 @@
+let doneBooksCount, pagesRead, totalBooks = 0
 let libraryArr = returnLibraryFromLS();
 let book = '';
 let main = document.querySelector("main");
@@ -105,6 +106,8 @@ document.addEventListener("submit", function (e) {
     updateLibraryLS(libraryArr, book);
     e.target.reset();
     displayBooks([book]);
+    calculateBookStats();
+    displayLsBookStats();
   } else if (e.submitter.id === "edit") {
     e.preventDefault();
     toggleCardLock(e.target)
@@ -126,13 +129,40 @@ document.addEventListener("submit", function (e) {
       };
     };
 
-
-
     toggleCardLock(e.target)
     updateLibraryLS(libraryArr, updatedBook);
     main.removeChild(e.target)
     displayBooks([updatedBook]);
+    calculateBookStats();
+    displayLsBookStats();
   }
 });
 
+function calculateBookStats() {
+  doneBooksCount = 0
+  pagesRead = 0
+  totalBooks = 0
+
+  libraryArr.forEach(function(e) {
+    if(Number(e.pagesRead) === Number(e.totalPages)) {
+      doneBooksCount++;
+    };
+  });
+
+  pagesRead = libraryArr.reduce((sum, book) => sum + Number(book.pagesRead), 0);
+  totalBooks = libraryArr.length;
+}
+
+function displayLsBookStats() {
+  totalBooksDom = document.querySelector("#totalBooks");
+  doneBooksDom = document.querySelector("#doneBooks");
+  pagesReadDom = document.querySelector("#pagesRead");
+
+  totalBooksDom.innerHTML = totalBooks;
+  pagesReadDom.innerHTML = pagesRead;
+  doneBooksDom.innerHTML = doneBooksCount;
+}
+
 displayBooks(libraryArr);
+calculateBookStats();
+displayLsBookStats();
