@@ -83,7 +83,7 @@
           <!-- cover image -->
           <input type="text" placeholder="Add cover image URL" class="toggle-hidden hidden card-input normal-case" />
         </div>
-        <!-- pages read and button -->
+        <!-- pages read and edit button -->
         <div class="flex justify-between mx-1 text-center">
           <div class="flex flex-col w-24 p-1 card-input text-sm self-end">
             <div id="error" class="hidden bg-red-400 border normal-case break-words bg-opacity-60">Reduce pages read</div>
@@ -93,13 +93,18 @@
           </div>
 
           <!-- done & edit buttons -->
-          <button id="commit-edit" class="toggle-hidden done hidden text-center self-end bg-purple-400 text-black hover:bg-purple-900 hover:text-purple-200 w-16 p-1 rounded">Save Change</button>
-          <button id="edit" class="toggle-hidden edit text-center self-end bg-green-400 text-black hover:bg-green-900 hover:text-purple-200 w-16 p-1 rounded">Edit</button>
+          <div class="flex flex-col">
+            <button id="commit-edit" class="toggle-hidden done hidden text-center self-end bg-purple-400 text-black hover:bg-purple-900 hover:text-purple-200 w-16 p-1 rounded">Save Change</button>
+            <button id="edit" class="toggle-hidden mb-2 edit text-center self-end bg-green-400 text-black hover:bg-green-900 hover:text-purple-200 w-16 p-1 rounded">Edit</button>
+            <button id="delete" class="toggle-hidden delete text-center self-end bg-red-400 text-black hover:bg-red-900 hover:text-purple-200 w-16 p-1 rounded">Delete</button>
+            <button id="confirm-delete" class="toggle-hidden hidden confirm-delete text-center self-end bg-red-400 text-black hover:bg-red-900 hover:text-purple-200 w-16 p-1 rounded">Delete</button>
+            <button id="deny-delete" class="toggle-hidden hidden deny-delete text-center self-end bg-red-400 text-black hover:bg-red-900 hover:text-purple-200 w-16 p-1 rounded">Delete</button>
+          </div>
         </div>
       </form>
     </main>
 
-    <footer class="lg:hidden text-center w-full py-6 bg-gray-700 font-bold">
+    <footer class="text-white lg:hidden text-center w-full py-6 bg-gray-700 font-bold">
       <h3>Project by PaperOrb</h3>
     </footer>
   </body>

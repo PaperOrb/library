@@ -110,10 +110,17 @@ document.addEventListener("submit", function (e) {
     displayLsBookStats();
   } else if (e.submitter.id === "edit") {
     e.preventDefault();
-    toggleCardLock(e.target)
+    toggleCardLock(e.target);
+  } else if (e.submitter.id === "delete") {
+    toggleConfirmation(e.target);
+  } else if (e.submitter.id === "delete-confirm") {
+    removeBookFromLibArr(e);
+    updateLibraryLS(libraryArr);
+    main.removeChild(e.target);
+    calculateBookStats();
+    displayLsBookStats();
   } else if (e.submitter.id === "commit-edit") {
     e.preventDefault();
-
     let updatedBook = createBook(e.target);
 
     if (invalidPagesRead(updatedBook, e.target)) {
@@ -121,14 +128,7 @@ document.addEventListener("submit", function (e) {
       return;
     }
 
-    // find book inside libraryArr correspdoning to clicked form
-    for(let i = libraryArr.length - 1; i > -1; i--) {
-      if(Number(libraryArr[i].index) === Number(e.target.id)) {
-        libraryArr.splice(i, 1)
-        // updateLibraryLS(libraryArr)
-      };
-    };
-
+    removeBookFromLibArr(e);
     toggleCardLock(e.target)
     updateLibraryLS(libraryArr, updatedBook);
     main.removeChild(e.target)
@@ -137,6 +137,14 @@ document.addEventListener("submit", function (e) {
     displayLsBookStats();
   }
 });
+
+function removeBookFromLibArr(e) {
+  for(let i = libraryArr.length - 1; i > -1; i--) {
+    if(Number(libraryArr[i].index) === Number(e.target.id)) {
+      libraryArr.splice(i, 1)
+    };
+  };
+};
 
 function calculateBookStats() {
   doneBooksCount = 0
